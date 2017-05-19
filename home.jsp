@@ -12,6 +12,7 @@
 </head>
 <body>
 <h1>わったいな掲示板</h1>
+<h3>${loginUser.name}がログイン中</h3>
 <div class="main-contents">
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
@@ -27,41 +28,51 @@
 
 <div class="header">
 	<a href="message">新規投稿</a>
-	<a href="manage">ユーザー管理</a>
+	<c:if test="${loginUser.post_id == 1}">
+		<a href="manage">ユーザー管理</a>
+	</c:if>
 	<a href="logout">ログアウト</a>
 </div>
 <div class="main-contents">
 	<form action="./index.jsp" method="get">
+		カテゴリー
 		<select name="category" id="category">
 			<option value="" ><c:out value="ALL"/> </option>
-			<c:forEach items="${categorys}" var="category">
-				<option value="${category.category}" ><c:out value="${category.category}"/> </option>
+			<c:forEach items="${categorys}" var="categorys">
+				<c:choose>
+					<c:when test="${categorys.category == category}">
+						<option value="${categorys.category}" selected><c:out value="${categorys.category}"/> </option>
+					</c:when>
+					<c:when test="${categorys.category != category}">
+						<option value="${categorys.category}" ><c:out value="${categorys.category}"/> </option>
+					</c:when>
+				</c:choose>
 			</c:forEach>
-		</select>
-		<input type="submit" value="カテゴリー検索">
-	</form><br />
-	期間検索
-	<form action="./index.jsp" method="post">
-		<label for="startDate">開始期間
-		<input name="startDate" id="startDate"/><br />
+		</select><br />
+		検索期間<br />
+		<label for="startDate">開始
+			<input type="date" name="startDate" id="startDate" value="${startDate}"/>
 		</label>
-		<label for="endDate">開始期間
-		<input name="endDate" id="endDate"/>
+		<label for="endDate">終了
+			<input type="date" name="endDate" id="endDate" value="${ endDate}"/>
 		</label>
 		<input type="submit" value="検索">
 	</form><br />
+
 	<div class="messages">
 		<c:forEach items="${messages}" var="message">
 		<div class="message">
-				<div class="account">
-					<span class="login_id"><c:out value="${message.login_id}" /></span>
-					<span class="name"><c:out value="${message.name}" /></span>
-				</div>
-				<div class="object"><c:out value="${message.object}" /></div>
-				<div class="category"><c:out value="${message.category}" /></div>
-				<div class="text"><c:out value="${message.text}" /></div>
+				<div class="account">投稿者：<c:out value="${message.name}" /></div>
+				<div class="object">件名：<c:out value="${message.object}" /></div>
+				<div class="category">カテゴリー：<c:out value="${message.category}" /></div>
+				<div class="text">本文：<c:out value="${message.text}" /></div>
 				<div class="insert_time"><c:out value="${message.insert_time}" /></div>
-
+				<c:if test="${loginUser.post_id==2 || loginUser.id == message.user_id}">
+					<form action="delete" method="get">
+						<input type ="hidden" name="deleteMessage" value="${message.message_id}">
+						<input type="submit" value="削除">
+					</form>
+				</c:if>
 				<c:forEach items="${comments}" var="comment">
 					<c:if test="${comment.message_id == message.message_id}" var="comment.message_id">
 						<div class= "comment">
@@ -72,14 +83,33 @@
 							<div class="text"><c:out value="${comment.text}" /></div>
 							<div class="insert_time"><c:out value="${comment.insert_time}" /></div>
 						</div>
+
+						<c:choose>
+							<c:when test="${loginUser.post_id==2 || loginUser.id == comment.user_id}">
+								<form action="delete" method="get">
+									<input type ="hidden" name="deleteComment" value="${comment.comment_id}">
+									<input type="submit" value="コメント削除">
+								</form>
+							</c:when>
+							<c:when test="${loginUser.branch_id==comment.branch_id && loginUser.post_id==3}">
+								<form action="delete" method="get">
+									<input type ="hidden" name="deleteComment" value="${comment.comment_id}">
+									<input type="submit" value="コメント削除">
+								</form>
+							</c:when>
+						</c:choose>
 					</c:if>
 
 				</c:forEach>
 				<div class="comment">
 					<form action="./index.jsp" method="post">
 						コメント<br />
-						<textarea name="text" cols="20" rows="3" class="text"></textarea>
-						<br />
+						<c:if test="${comment.message_id == message.message_id}">
+							<textarea name="text" cols="20" rows="3" class="text">${comment.text}</textarea><br />
+						</c:if>
+						<c:if test="${comment.message_id != message.message_id}">
+							<textarea name="text" cols="20" rows="3" class="text"></textarea><br />
+						</c:if>
 						<input type="submit" value="投稿">（500文字まで）
 						<input type ="hidden" name="message_id" value="${message.message_id}">
 					</form>

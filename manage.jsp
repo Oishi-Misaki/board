@@ -24,14 +24,66 @@
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
 </div>
-
 <div class="header">
-	<a href="message">新規投稿</a>
-	<a href="logout">ログアウト</a>
+	<a href="signup">新規登録</a>
+	<a href="./">ホーム</a>
 </div>
-<div class="main-contents">
+<h2>ユーザー管理</h2>
 
-</div>
+ ユーザー一覧
+<table>
+<tr>
+	<th>ログインID</th>
+	<th>名前</th>
+	<th>支店</th>
+	<th>所属</th>
+	<th>状態</th>
+	<th>状態変更</th>
+	<th>編集</th>
+	<th>削除</th>
+</tr>
+<c:forEach items="${users}" var="user">
+	<tr>
+		<td>${user.login_id} </td>
+		<td>${user.name} </td>
+		<td>${user.branch_name}</td>
+		<td>${user.post_name}</td>
+		<td>
+			<c:if test="${ user.can_use == 1 }">停止中</c:if>
+			<c:if test="${ user.can_use == 0 }">使用中</c:if>
+		<td>
+			<c:if test="${loginUser.id != user.id }">
+				<form action="manage" method="post"><br />
+					<c:if test="${ user.can_use == 1 }">
+						<input type ="hidden" name="can_use" value="0">
+						<input type ="hidden" name="user_id" value="${user.id}">
+						<input type='submit'  value='復活' onclick='return confirm("本当にアカウントを復活しますか？");'/>
+					</c:if>
+					<c:if test="${ user.can_use == 0 }">
+						<input type ="hidden" name="can_use" value="1">
+						<input type ="hidden" name="user_id" value="${user.id}">
+						<input type='submit'  value='停止' onclick='return confirm("本当にアカウントを停止しますか？");'/>
+					</c:if>
+				</form>
+			</c:if>
+		</td>
+		<td>
+			<form action="edit" method="get"><br />
+				<input type ="hidden" name="user_id" value="${user.id}">
+				<input type="submit"  value="編集">
+			</form>
+		</td>
+		<td>
+			<c:if test="${loginUser.id != user.id }">
+				<form action="delete" method="get"><br />
+					<input type ="hidden" name="user_id" value="${user.id}">
+					<input type="submit"  value="削除">
+				</form>
+			</c:if>
+		</td>
+	</tr>
+</c:forEach>
+</table>
 <div class="copyright">Copyright(c)Misaki Oishi</div>
 </body>
 </html>
