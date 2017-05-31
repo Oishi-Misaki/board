@@ -1,0 +1,157 @@
+@CHARSET "UTF-8";
+
+h1 {
+	text-align: left;
+	margin:0;
+	padding:20px;
+	background: linear-gradient(#f8ffdf ,#eeffb5,#dbff86);
+	font-weight: bold;
+	}
+
+li{
+	list-style:none;
+}
+
+label {
+	display: block;
+}
+.errorMessages {
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	color: red;
+	background-color: #dbdbdb;
+}
+textarea.message-text{
+	resize: vertical;
+	width:98%;
+}
+.comment-box{
+	margin-right:3px;
+	width:98%;
+	min-height:30px;
+	word-wrap : break-word;
+	resize: vertical;
+}
+
+
+body {
+	background-color: #ffffff;
+	argin:0px;
+}
+
+
+ .navi{
+	text-indent: 10px;
+	text-align:left;
+	color: #000080;
+	width:50%;
+	float:left;
+	background-color:#dbff86;
+	margin-bottom:20px;
+}
+
+.loginUser{
+	text-align:right;
+	color: #000080;
+	width:50%;
+	float:left;
+	background-color:#dbff86;
+	margin-bottom:20px;
+}
+
+
+.main-contents {
+	margin-left: 10%;
+	margin-right: 10%;
+	outline-width: 2px;
+	outline-style: solid;
+	outline-color: white;
+}
+.search{
+	color:#000000;
+	text-align:right;
+}
+
+.search.date {
+	font-weight: lighter;
+	color: gray;
+	font: small-caption;
+}
+
+
+.infor{
+	border-bottom:medium solid #008000;
+}
+.message{
+	border-bottom: medium solid #c0c0c0;
+	margin:5px;
+	padding-bottom:5px;
+	background-color:#ffffff;
+	word-wrap : break-word;
+}
+
+
+.object{
+	font-size:30px;
+}
+.account{
+	color:#004040;
+	font-size:18px;
+}
+.category{
+	text-align:right;
+}
+.insert_time{
+	text-align:right;
+}
+.comments{
+	margin-top:10px;
+	text-align:left;
+	margin-left:5%;
+	padding-left:5%;
+	border-left:medium solid #cbff53;
+}
+.comment{
+	margin-top:5px;
+	border-top:thin dotted #000000;
+	word-wrap : break-word;
+}
+.insertComment{
+	text-align:right;
+	margin-top:5px;
+	border-top:thin dotted #000000;
+}
+
+.table1 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background:#f4f9e8;
+}
+.table1 thead th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    color:#fff;
+    background:#008000;
+    text-align:center;
+    vertical-align: middle;
+    horizontal-align: middle;
+    border-bottom: 1px solid #008000;
+}
+.table1 td {
+    width: 350px;
+    padding: 10px;
+   text-align:center;
+    vertical-align: middle;
+    border-bottom: 1px solid #008000;
+}
+
+
+.copyright {
+	text-align: center;
+}
